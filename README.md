@@ -2,7 +2,9 @@
 
 ### Can't decide who should make a brew? Let Slack do it for you
 
-This Outgoing WebGook takes the members of the channel to decide who should get up and make a round of tea. It uses people joined no matter if they are online or not. If you have members of the team that don't drink tea - then it might be worth making a dedicated channel.
+_This uses the Slack API class created by 10w042 - the original can be found [on GitHub](https://github.com/10w042/slack-api). The class is included in this repo for ease of use._
+
+This Outgoing WebHook takes the members of the channel to decide who should get up and make a round of tea. It uses people joined no matter if they are online or not. If you have members of the team that don't drink tea - then it might be worth making a dedicated channel.
 
 ### Installation
 
