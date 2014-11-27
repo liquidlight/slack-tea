@@ -1,15 +1,18 @@
 <?php
 
+	$trigger_word = '!tea';
+	$auth_token = 'AUTH TOKEN';
+
 	// Include slack library from https://github.com/10w042/slack-api
 	include 'Slack.php';
 
 	// Remove our keyword from the text to extract name to exclude
-	$exclude = str_replace('!tea ', '', $_POST['text']);
+	$exclude = str_replace($trigger_word . ' ', '', $_POST['text']);
 
 	// Connect to Slack
 	// Use authentication token found here: https://api.slack.com/
 	// Scroll to the bottom and issue a token
-	$Slack = new Slack('AUTH TOKEN');
+	$Slack = new Slack($auth_token);
 
 	// Get the info for the channel requested from
 	$data = $Slack->call('channels.info', array('channel' => $_POST['channel_id']));
