@@ -1,7 +1,17 @@
 <?php
 
-	$trigger_word = '!tea';
 	$auth_token = 'AUTH TOKEN';
+
+	$trigger_word = '!tea';
+	$responses = array(
+		"It's about time {{USER}} put the kettle on - off you trot!",
+		"Pop the kettle on {{USER}} - it's your turn to make a cuppa",
+		"Who wants a drink? {{USER}} is heading to the kitchen to make one",
+		"Coffee? Tea? Sugar? Peppermint Tea? Green Tea? Get your orders in as {{USER}} is making a round",
+		"That's very nice of {{USER}} to make a round of tea!",
+		"Mine is milk 2 sugars please {{USER}} - what about <@channel|everyone> else?",
+		"The tea maker is... {{USER}}! Get brewing."
+	);
 
 	// Include slack library from https://github.com/10w042/slack-api
 	include 'Slack.php';
@@ -23,26 +33,32 @@
 	foreach ($data['channel']['members'] as $m) {
 		// Get user data
 		$userData = $Slack->call('users.info', array('user' => $m));
+		// Check to see if the user is online before adding them to list of brewers
+		$presence = $Slack->call('users.getPresence', array('user' => $m));
+		
 		$user = $userData['user'];
 
 		// If there is an exclude, check to see if it matches a user real name (lowercase)
 		// If it does not, add it to the $teaMakers array
-		if($exclude) {
-			if(!(strpos(strtolower($user['real_name']), strtolower($exclude)) !== false))
+		if($presence['presence'] == 'active')
+			if($exclude) {
+				if(!(strpos(strtolower($user['real_name']), strtolower($exclude)) !== false))
+					$teaMakers[] = $user;
+			} else {
 				$teaMakers[] = $user;
-		} else {
-			$teaMakers[] = $user;
-		}
+			}
 	}
-
-	// Shuffle the array
-	shuffle($teaMakers);
+	// Shuffle shuffle shuffle the arrays
+	shuffle(shuffle(shuffle($teaMakers)));
+	shuffle(shuffle(shuffle($responses)));
 
 	// Get a random user from the array
 	$user = $teaMakers[rand(0, (count($teaMakers) - 1))];
+	$response = $responses[rand(0, (count($responses) - 1))];
 
 	// SEND OUT THE JSON!! Enjoy your brew
 	header('Content-Type: application/json');
 	echo json_encode(array(
-		'text' => 'The tea maker is..... <@' . $user['id'] . '|' . $user['name'] . '>!! Get brewing.'
+		'text' => str_replace('{{USER}}', '<@' . $user['id'] . '|' . $user['name'] . '>', $response)
 	));
+

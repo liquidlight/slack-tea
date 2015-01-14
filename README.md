@@ -4,7 +4,7 @@
 
 _This uses the Slack API class created by 10w042 - the original can be found [on GitHub](https://github.com/10w042/slack-api). The class is included in this repo for ease of use._
 
-This Outgoing WebHook takes the members of the channel to decide who should get up and make a round of tea. It uses people joined no matter if they are online or not. If you have members of the team that don't drink tea - then it might be worth making a dedicated channel.
+This Outgoing WebHook takes the members of the channel to decide who should get up and make a round of tea. If you have members of the team that don't drink tea - then it might be worth making a dedicated channel.
 
 ### Installation
 
@@ -25,6 +25,14 @@ Job Done!
 
 If all has worked well, you should be able to type your trigger word into your designated channel and hey presto! A tea maker is selected.
 
+### Customisation
+
+There are a couple variables at the top of `tea.php` - make sure you keep these updated.
+
+`$trigger_word` - Make sure if your trigger word is anything other than **!tea** you update this variable.
+
+`$responses` - feel free to update/change the responses, just us `{{USER}}` where you want the users name to appear.
+
 ### Pass in an extra string
 
 The tea bot allows you to pass in an extra paramter to exclude a tea maker. For example, if _Tarquin_ had just made the round of tea - it would be unfair for him to be in the spinning for the next round:
@@ -42,5 +50,3 @@ This does a very rudamentary `strpos()` and so could be slightly abused. Want a 
 
 - Add initial feedback to let the users know the Tea Bot is working
 - Use the Slack class to send back messages to the channel
-- Add more tea based puns
-- Let feedback messages be easily customised
