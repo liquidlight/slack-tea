@@ -9,7 +9,7 @@
 		"Who wants a drink? {{USER}} is heading to the kitchen to make one",
 		"Coffee? Tea? Sugar? Peppermint Tea? Green Tea? Get your orders in as {{USER}} is making a round",
 		"That's very nice of {{USER}} to make a round of tea!",
-		"Mine is milk 2 sugars please {{USER}} - what about <@channel|everyone> else?",
+		"Mine is milk 2 sugars please {{USER}} - what about everyone else?",
 		"The tea maker is... {{USER}}! Get brewing."
 	);
 
@@ -48,17 +48,19 @@
 				$teaMakers[] = $user;
 			}
 	}
+
 	// Shuffle shuffle shuffle the arrays
-	shuffle(shuffle(shuffle($teaMakers)));
-	shuffle(shuffle(shuffle($responses)));
+	function pickOne($array) {
+		shuffle(shuffle(shuffle($array)));
+		return $array[rand(0, (count($array) - 1))];
+	}
 
 	// Get a random user from the array
-	$user = $teaMakers[rand(0, (count($teaMakers) - 1))];
-	$response = $responses[rand(0, (count($responses) - 1))];
+	$user = pickOne($teaMakers);
 
 	// SEND OUT THE JSON!! Enjoy your brew
 	header('Content-Type: application/json');
 	echo json_encode(array(
-		'text' => str_replace('{{USER}}', '<@' . $user['id'] . '|' . $user['name'] . '>', $response)
+		'text' => str_replace('{{USER}}', '<@' . $user['id'] . '>', pickOne($responses))
 	));
 
