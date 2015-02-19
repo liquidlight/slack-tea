@@ -51,8 +51,8 @@
 
 	// Shuffle shuffle shuffle the arrays
 	function pickOne($array) {
-		shuffle(shuffle(shuffle($array)));
-		return $array[rand(0, (count($array) - 1))];
+		shuffle($array);
+		return $array[mt_rand(0, (count($array) - 1))];
 	}
 
 	// Get a random user from the array
