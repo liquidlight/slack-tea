@@ -9,7 +9,7 @@ This Outgoing WebHook takes the members of the channel to decide who should get 
 ### Installation
 
 1. Download the PHP files and host them on an externally accessible URL
-2. Head to [http://api.slack.com](http://api.slack.com) and (if you haven't already) scroll down and click the **Create Token** link
+2. Head to [https://api.slack.com/web](https://api.slack.com/web) and (if you haven't already) scroll down and click the **Create Token** link
 3. Copy your token that is generated and paste it into the `$auth_token` variable at the top of `tea.php`
 4. Drop over to [https://YOURTEAM.slack.com/services/new](https://YOURTEAM.slack.com/services/new) and right at the bottom, add the **Outgoing WebHooks** integration
 5. Create the WebHook with the following settings
