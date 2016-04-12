@@ -1,5 +1,45 @@
 <?php
 
+	/*
+		Couple of functions to get a random tea meme
+	*/
+
+	function get_url_contents($url) {
+	    $crl = curl_init();
+
+	    curl_setopt($crl, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
+	    curl_setopt($crl, CURLOPT_URL, $url);
+	    curl_setopt($crl, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($crl, CURLOPT_CONNECTTIMEOUT, 5);
+
+	    $ret = curl_exec($crl);
+	    curl_close($crl);
+	    return $ret;
+	}
+
+	function get_tea_meme() {
+		// Google API key
+		$api_key 			= 'YOUR_API_KEY';
+		// Google Custom Search Engine ID
+		$cse_id 			= 'YOUR_CSE_ID';
+		// Search Term
+		$search_term	= 'tea+meme';
+
+		// Do a Google API call to find a tea meme
+		$results_page = rand(1,5); 
+		$json 				= get_url_contents('https://www.googleapis.com/customsearch/v1?key='.$api_key.'&cx='.$cse_id.'&q='.$search_term.'&searchType=image&alt=json&imgSize=medium&start='.$results_page); 
+		$data 				= json_decode($json);
+		$result_num 	= rand(0,9); // get a random result from the returned data
+		$data 				= $data->items[$result_num];
+		// return a random meme!
+		return $data->link;
+	}
+
+	/*
+		The real bot logic
+	*/
+
+
 	$auth_token = 'AUTH TOKEN';
 
 	$trigger_word = '!tea';
@@ -60,7 +100,10 @@
 
 	// SEND OUT THE JSON!! Enjoy your brew
 	header('Content-Type: application/json');
-	echo json_encode(array(
-		'text' => str_replace('{{USER}}', '<@' . $user['id'] . '>', pickOne($responses))
-	));
+	$append_meme = ($show_meme) ? "\n\r" . get_tea_meme() : '' ;
+	echo json_encode(
+		array(
+		'text' => str_replace('{{USER}}', '<@' . $user['id'] . '>', pickOne($responses)) . $append_meme
+		)
+	);
 
