@@ -50,3 +50,4 @@ This does a very rudamentary `strpos()` and so could be slightly abused. Want a 
 
 - Add initial feedback to let the users know the Tea Bot is working
 - Use the Slack class to send back messages to the channel
+- Pull config into seperate file for better committing
