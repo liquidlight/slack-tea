@@ -1,6 +1,6 @@
 <?php
-
-	$auth_token = 'AUTH TOKEN';
+	
+	$config = include(__DIR__ . '/config.php');
 
 	$trigger_word = '!tea';
 	$responses = array(
@@ -22,7 +22,7 @@
 	// Connect to Slack
 	// Use authentication token found here: https://api.slack.com/
 	// Scroll to the bottom and issue a token
-	$Slack = new Slack($auth_token);
+	$Slack = new Slack($config['auth_token']);
 
 	// Get the info for the channel requested from
 	$data = $Slack->call('channels.info', array('channel' => $_POST['channel_id']));
