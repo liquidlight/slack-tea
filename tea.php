@@ -1,4 +1,11 @@
 <?php
+
+	// Shuffle shuffle shuffle the arrays
+	function pickOne($array) {
+		shuffle($array);
+		return $array[mt_rand(0, (count($array) - 1))];
+	}
+
 	// Include slack library from https://github.com/10w042/slack-api
 	include(__DIR__ . '/Slack.php');
 
